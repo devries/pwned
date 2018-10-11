@@ -57,6 +57,7 @@ func main() {
 		}
 		if hentry == hexTail {
 			pwcount = hcount
+			break
 		}
 	}
 
