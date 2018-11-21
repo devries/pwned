@@ -15,18 +15,21 @@ build/$(BINARY)-linux:
 build/shar.tar.gz: build/$(BINARY)-darwin build/$(BINARY)-linux shar/README-shar shar/install.sh
 	tar cfz build/shar.tar.gz -C build $(BINARY)-darwin $(BINARY)-linux -C ../shar README-shar install.sh
 
-$(BINARY)-install.sh: build/shar.tar.gz shar/sh-header
-	cat shar/sh-header build/shar.tar.gz > $(BINARY)-install.sh
-	chmod 755 $(BINARY)-install.sh
+dist/$(BINARY)-install.sh: build/shar.tar.gz shar/sh-header
+	mkdir -p dist
+	cat shar/sh-header build/shar.tar.gz > dist/$(BINARY)-install.sh
+	chmod 755 dist/$(BINARY)-install.sh
 
-windows: $(BINARY).exe
+windows: dist/$(BINARY).exe
 
-$(BINARY).exe:
-	GOOS=windows GOARCH=amd64 go build -o $(BINARY).exe
+dist/$(BINARY).exe:
+	mkdir -p dist
+	GOOS=windows GOARCH=amd64 go build -o dist/$(BINARY).exe
 
-dist: $(BINARY)-install.sh 
+shell: dist/$(BINARY)-install.sh 
+
+all: shell windows
 
 clean:
 	rm -rf build || true
-	rm -f $(BINARY)-install.sh || true
-	rm -f $(BINARY).exe || true
+	rm -rf dist || true
