@@ -1,3 +1,5 @@
 *~
 .*.swp
 pwned
+build/
+pwned-install.sh
