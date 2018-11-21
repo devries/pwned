@@ -12,7 +12,12 @@ import (
 	"golang.org/x/crypto/ssh/terminal"
 )
 
+var version string
+
 func main() {
+	// Print version
+	fmt.Printf("pwned %s\n", version)
+
 	// Ask for password without echoing to terminal
 	fmt.Print("Enter Password: ")
 	bytePassword, err := terminal.ReadPassword(0)
