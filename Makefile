@@ -19,8 +19,14 @@ $(BINARY)-install.sh: build/shar.tar.gz shar/sh-header
 	cat shar/sh-header build/shar.tar.gz > $(BINARY)-install.sh
 	chmod 755 $(BINARY)-install.sh
 
-dist: $(BINARY)-install.sh
+windows: $(BINARY).exe
+
+$(BINARY).exe:
+	GOOS=windows GOARCH=amd64 go build -o $(BINARY).exe
+
+dist: $(BINARY)-install.sh 
 
 clean:
 	rm -rf build || true
 	rm -f $(BINARY)-install.sh || true
+	rm -f $(BINARY).exe || true
