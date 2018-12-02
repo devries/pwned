@@ -3,13 +3,13 @@ VERSION := $(shell ./git_versioner.py)
 
 darwin: build/$(BINARY)-darwin
 
-build/$(BINARY)-darwin:
+build/$(BINARY)-darwin: main.go
 	mkdir -p build
 	GOOS=darwin GOARCH=amd64 go build -ldflags "-X main.version=$(VERSION)" -o build/$(BINARY)-darwin
 
 linux: build/$(BINARY)-linux
 
-build/$(BINARY)-linux:
+build/$(BINARY)-linux: main.go
 	mkdir -p build
 	GOOS=linux GOARCH=amd64 go build -ldflags "-X main.version=$(VERSION)" -o build/$(BINARY)-linux
 
@@ -23,14 +23,13 @@ dist/$(BINARY)-install.sh: build/shar.tar.gz shar/sh-header
 
 windows: dist/$(BINARY).exe
 
-dist/$(BINARY).exe:
+dist/$(BINARY).exe: main.go
 	mkdir -p dist
 	GOOS=windows GOARCH=amd64 go build -ldflags "-X main.version=$(VERSION)" -o dist/$(BINARY).exe
 
 shell: dist/$(BINARY)-install.sh 
 
 all: shell windows
-	echo $(VERSION)
 
 clean:
 	rm -rf build || true

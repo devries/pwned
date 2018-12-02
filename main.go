@@ -16,7 +16,7 @@ var version string
 
 func main() {
 	// Print version
-	fmt.Printf("pwned %s\n", version)
+	fmt.Printf("pwned version: %s\n", version)
 
 	// Ask for password without echoing to terminal
 	fmt.Print("Enter Password: ")
