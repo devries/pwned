@@ -1,15 +1,16 @@
 BINARY := pwned
 VERSION := $(shell ./git_versioner.py)
+SOURCE := main.go go.mod go.sum
 
 darwin: build/$(BINARY)-darwin
 
-build/$(BINARY)-darwin: main.go
+build/$(BINARY)-darwin: $(SOURCE)
 	mkdir -p build
 	GOOS=darwin GOARCH=amd64 go build -ldflags "-X main.version=$(VERSION)" -o build/$(BINARY)-darwin
 
 linux: build/$(BINARY)-linux
 
-build/$(BINARY)-linux: main.go
+build/$(BINARY)-linux: $(SOURCE)
 	mkdir -p build
 	GOOS=linux GOARCH=amd64 go build -ldflags "-X main.version=$(VERSION)" -o build/$(BINARY)-linux
 
@@ -23,7 +24,7 @@ dist/$(BINARY)-install.sh: build/shar.tar.gz shar/sh-header
 
 windows: dist/$(BINARY).exe
 
-dist/$(BINARY).exe: main.go
+dist/$(BINARY).exe: $(SOURCE)
 	mkdir -p dist
 	GOOS=windows GOARCH=amd64 go build -ldflags "-X main.version=$(VERSION)" -o dist/$(BINARY).exe
 
