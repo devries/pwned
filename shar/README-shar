@@ -4,6 +4,9 @@ The utility will allow a user to enter a password. That password will be
 SHA-1 hashed and checked against a list of SHA-1 hashes provided by Troy
 Hunt's database of pwned passwords (see https://haveibeenpwned.com/Passwords).
 
+The source code for this program can be downloaded from 
+https://github.com/devries/pwned.
+
 This utility is covered by the license below.
 
 MIT License
