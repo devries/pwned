@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"crypto/sha1"
+	"crypto/tls"
 	"fmt"
 	"log"
 	"net/http"
@@ -37,7 +38,22 @@ func main() {
 	// Query webservice
 	urlStart := "https://api.pwnedpasswords.com/range/"
 
-	resp, err := http.Get(urlStart + hexHash[:5])
+	// Configure minimum TLS version to 1.2
+	config := &tls.Config{
+		MinVersion: tls.VersionTLS12,
+	}
+
+	tr := &http.Transport{TLSClientConfig: config}
+	client := &http.Client{Transport: tr}
+
+	req, err := http.NewRequest("GET", urlStart+hexHash[:5], nil)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	req.Header.Add("Add-Padding", "true")
+
+	resp, err := client.Do(req)
 	if err != nil {
 		log.Fatal(err)
 	}

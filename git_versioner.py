@@ -2,7 +2,7 @@
 import subprocess
 
 def find_version_number():
-    git_output = subprocess.check_output(['git','describe','--tags','--dirty'])
+    git_output = subprocess.check_output(['git','describe','--tags','--dirty']).decode('utf-8')
     elements = git_output.rstrip().split('-')
     tag_components = [elements[0]]
     if len(elements)>1:
@@ -15,4 +15,4 @@ def find_version_number():
     return '.'.join(tag_components)
 
 if __name__=='__main__':
-    print find_version_number()
+    print(find_version_number())
