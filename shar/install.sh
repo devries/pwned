@@ -35,13 +35,21 @@ mkdir -p ${binpath}
 # Determine Operating System
 unameOut="$(uname -s)"
 case "${unameOut}" in
-  Linux*)   machine=linux;;
+  Linux*)
+    arch="$(uname -m)"
+    case $arch in
+      x86_64*) machine=linux;;
+      aarch64*) machine=linuxarm64;;
+      arm*) machine=linuxarmhf;;
+      *) machine=unknown;;
+    esac
+    ;;
   Darwin*)  machine=darwin;;
   *)        machine=unknown;;
 esac
 
 if [ $machine != "unknown" ]; then
-  echo "Detected: ${unameOut} OS"
+  echo "Detected: ${machine}"
 
   # Copy the binary
   cp pwned-${machine} ${binpath}/pwned
@@ -52,5 +60,6 @@ if [ $machine != "unknown" ]; then
   # Write some documentation
   echo "pwned is now installed in ${binpath}"
 else
-  echo "Machine ${unameOut} not recognized."
+  arch="$(uname -m)"
+  echo "Machine ${unameOut}-${arch} not recognized."
 fi
