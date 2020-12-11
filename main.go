@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 	"strconv"
 	"strings"
 
@@ -21,7 +22,7 @@ func main() {
 
 	// Ask for password without echoing to terminal
 	fmt.Print("Enter Password: ")
-	bytePassword, err := terminal.ReadPassword(0)
+	bytePassword, err := terminal.ReadPassword(int(os.Stdin.Fd()))
 	if err != nil {
 		log.Fatal(err)
 	}
