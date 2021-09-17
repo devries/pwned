@@ -1,4 +1,7 @@
 # pwned
+
+[![Go Report Card](https://goreportcard.com/badge/github.com/devries/pwned)](https://goreportcard.com/report/github.com/devries/pwned)
+
 A small command line utility to check if a password has appeared in Pwned Passwords database
 
 I wrote this just to get a little more experience with Go. Feel free to use this if you want. It
