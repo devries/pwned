@@ -8,6 +8,10 @@ build/$(BINARY)-darwin: $(SOURCE)
 	mkdir -p build
 	CGO_ENABLED=0 GOOS=darwin GOARCH=amd64 go build -ldflags "-X main.version=$(VERSION)" -o build/$(BINARY)-darwin
 
+build/$(BINARY)-darwinarm: $(SOURCE)
+	mkdir -p build
+	CGO_ENABLED=0 GOOS=darwin GOARCH=arm64 go build -ldflags "-X main.version=$(VERSION)" -o build/$(BINARY)-darwinarm
+
 build/$(BINARY)-linux: $(SOURCE)
 	mkdir -p build
 	CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags "-X main.version=$(VERSION)" -o build/$(BINARY)-linux
@@ -24,7 +28,7 @@ dist/$(BINARY).exe: $(SOURCE)
 	mkdir -p dist
 	CGO_ENABLED=0 GOOS=windows GOARCH=amd64 go build -ldflags "-X main.version=$(VERSION)" -o dist/$(BINARY).exe
 
-build/shar.tar.gz: build/$(BINARY)-darwin build/$(BINARY)-linux build/$(BINARY)-linuxarmhf build/$(BINARY)-linuxarm64 shar/README-shar shar/install.sh
+build/shar.tar.gz: build/$(BINARY)-darwin build/$(BINARY)-darwinarm build/$(BINARY)-linux build/$(BINARY)-linuxarmhf build/$(BINARY)-linuxarm64 shar/README-shar shar/install.sh
 	tar cfz build/shar.tar.gz -C build $(BINARY)-darwin $(BINARY)-linux $(BINARY)-linuxarmhf $(BINARY)-linuxarm64 -C ../shar README-shar install.sh
 
 dist/$(BINARY)-install.sh: build/shar.tar.gz shar/sh-header

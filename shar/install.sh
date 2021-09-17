@@ -44,7 +44,14 @@ case "${unameOut}" in
       *) machine=unknown;;
     esac
     ;;
-  Darwin*)  machine=darwin;;
+  Darwin*)
+    arch="$(uname -m)"
+    case $arch in
+      x86_64*) machine=darwin;;
+      arm64*) machine=darwinarm;;
+      *) machine=unknown;;
+    esac
+    ;;
   *)        machine=unknown;;
 esac
 
