@@ -59,7 +59,7 @@ if [ $machine != "unknown" ]; then
   echo "Detected: ${machine}"
 
   # Copy the binary
-  cp pwned-${machine} ${binpath}/pwned
+  cp ${machine}/pwned ${binpath}/pwned
 
   # make binary executable
   chmod -R ugo+x ${binpath}/pwned
