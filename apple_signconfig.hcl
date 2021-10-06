@@ -10,10 +10,10 @@ sign {
 }
 
 dmg {
-  output_path = "dist/pwned-amd64.dmg"
+  output_path = "dist/pwned.dmg"
   volume_name = "Pwned"
 }
 
 zip {
-  output_path = "dist/pwned-amd64.zip"
+  output_path = "dist/pwned.zip"
 }
