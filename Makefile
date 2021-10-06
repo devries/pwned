@@ -45,7 +45,7 @@ dist/$(BINARY)-install.sh: build/shar.tar.gz shar/sh-header
 dist/$(BINARY).exe: build/windows/$(BINARY).exe
 	cp build/windows/$(BINARY).exe dist/$(BINARY).exe
 
-all: dist/$(BINARY)-install.sh dist/$(BINARY).exe ## Make everything
+all: dist/$(BINARY)-install.sh dist/$(BINARY).exe build/darwinuniversal/$(BINARY) ## Make everything
 
 clean: ## Clean everything
 	rm -rf build || true
