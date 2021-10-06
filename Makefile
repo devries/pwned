@@ -2,7 +2,7 @@ BINARY := pwned
 VERSION := $(shell ./git_versioner.py)
 SOURCE := main.go go.mod go.sum
 
-.PHONY: dist clean all
+.PHONY: dist clean all build
 
 build/darwin/$(BINARY): $(SOURCE)
 	mkdir -p build/darwin
@@ -28,14 +28,19 @@ build/windows/$(BINARY).exe: $(SOURCE)
 	mkdir -p build/windows
 	CGO_ENABLED=0 GOOS=windows GOARCH=amd64 go build -ldflags "-X main.version=$(VERSION)" -o build/windows/$(BINARY).exe
 
+build/darwinuniversal/$(BINARY): build/darwin/$(BINARY) build/darwinarm/$(BINARY)
+	mkdir -p build/darwinuniversal
+	lipo -create -output build/darwinuniversal/pwned build/darwin/pwned build/darwinarm/pwned
+
 build/shar.tar.gz: build/darwin/$(BINARY) build/darwinarm/$(BINARY) build/linux/$(BINARY) build/linuxarmhf/$(BINARY) build/linuxarm64/$(BINARY) shar/README-shar shar/install.sh
 	tar cfz build/shar.tar.gz -C build darwin/$(BINARY) darwinarm/$(BINARY) linux/$(BINARY) linuxarmhf/$(BINARY) linuxarm64/$(BINARY) -C ../shar README-shar install.sh
+
+build: build/darwin/$(BINARY) build/darwinarm/$(BINARY) build/linux/$(BINARY) build/linuxarmhf/$(BINARY) build/linuxarm64/$(BINARY) build/windows/$(BINARY).exe build/darwinuniversal/$(BINARY) ## Build all binaries
 
 dist/$(BINARY)-install.sh: build/shar.tar.gz shar/sh-header
 	mkdir -p dist
 	cat shar/sh-header build/shar.tar.gz > dist/$(BINARY)-install.sh
 	chmod 755 dist/$(BINARY)-install.sh
-
 
 dist/$(BINARY).exe: build/windows/$(BINARY).exe
 	cp build/windows/$(BINARY).exe dist/$(BINARY).exe
