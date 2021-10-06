@@ -32,8 +32,8 @@ build/darwinuniversal/$(BINARY): build/darwin/$(BINARY) build/darwinarm/$(BINARY
 	mkdir -p build/darwinuniversal
 	lipo -create -output build/darwinuniversal/pwned build/darwin/pwned build/darwinarm/pwned
 
-build/shar.tar.gz: build/darwin/$(BINARY) build/darwinarm/$(BINARY) build/linux/$(BINARY) build/linuxarmhf/$(BINARY) build/linuxarm64/$(BINARY) shar/README-shar shar/install.sh
-	tar cfz build/shar.tar.gz -C build darwin/$(BINARY) darwinarm/$(BINARY) linux/$(BINARY) linuxarmhf/$(BINARY) linuxarm64/$(BINARY) -C ../shar README-shar install.sh
+build/shar.tar.gz: build/linux/$(BINARY) build/linuxarmhf/$(BINARY) build/linuxarm64/$(BINARY) shar/README-shar shar/install.sh
+	tar cfz build/shar.tar.gz -C build linux/$(BINARY) linuxarmhf/$(BINARY) linuxarm64/$(BINARY) -C ../shar README-shar install.sh
 
 build: build/darwin/$(BINARY) build/darwinarm/$(BINARY) build/linux/$(BINARY) build/linuxarmhf/$(BINARY) build/linuxarm64/$(BINARY) build/windows/$(BINARY).exe build/darwinuniversal/$(BINARY) ## Build all binaries
 
