@@ -53,6 +53,7 @@ func main() {
 	}
 
 	req.Header.Add("Add-Padding", "true")
+	req.Header.Set("User-Agent", "pwned cli - https://github.com/devries/pwned")
 
 	resp, err := client.Do(req)
 	if err != nil {
