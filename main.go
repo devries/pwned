@@ -11,7 +11,7 @@ import (
 	"strconv"
 	"strings"
 
-	"golang.org/x/crypto/ssh/terminal"
+	"golang.org/x/term"
 )
 
 var version string
@@ -22,7 +22,7 @@ func main() {
 
 	// Ask for password without echoing to terminal
 	fmt.Print("Enter Password: ")
-	bytePassword, err := terminal.ReadPassword(int(os.Stdin.Fd()))
+	bytePassword, err := term.ReadPassword(int(os.Stdin.Fd()))
 	if err != nil {
 		log.Fatal(err)
 	}
