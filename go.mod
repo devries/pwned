@@ -2,4 +2,4 @@ module github.com/devries/pwned
 
 go 1.14
 
-require golang.org/x/term v0.19.0
+require golang.org/x/term v0.20.0
